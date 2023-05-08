@@ -7,6 +7,7 @@ const app = express();
 const cors = require("cors");
 const passport = require("passport");
 require("./passport")(passport); // this is a function, and run it
+const path = require("path");
 
 // Router
 const authRouter = require("../routes").auth;
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 // for local transition
 app.use(cors());
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 // Routing
 app.use("/api/user", authRouter);
