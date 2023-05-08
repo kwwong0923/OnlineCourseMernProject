@@ -18,7 +18,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 // for local transition
 app.use(cors());
-app.use(express.static(path.join(__dirname, "client", "build")));
 
 // Routing
 app.use("/api/user", authRouter);
@@ -30,4 +29,11 @@ app.use("/api/course",
      courseRouter);
 
 
+if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging")
+{
+    app.get("*", (req, res) =>
+    {
+         res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+     });
+}
 module.exports = app;
