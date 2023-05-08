@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 // for local transition
 app.use(cors());
-
+app.use(express.static(path.join(__dirname, "client", "build")));
 // Routing
 app.use("/api/user", authRouter);
 // Only after login, the user can create or enroll a course
@@ -29,11 +29,4 @@ app.use("/api/course",
      courseRouter);
 
 
-if (process.env.NODE_ENV === "production" || process.env.NODE_ENV === "staging")
-{
-    app.get("*", (req, res) =>
-    {
-         res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-     });
-}
 module.exports = app;
